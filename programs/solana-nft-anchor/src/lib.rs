@@ -11,9 +11,9 @@ use anchor_spl::{
     },
     token::{ mint_to, Mint, MintTo, Token, TokenAccount },
 };
-use mpl_token_metadata::accounts::{ MasterEdition, Metadata as MetadataAccount };
+use mpl_token_metadata::pda as MplPDA;
 
-declare_id!("<UPDATE HERE>");
+declare_id!("4qkzAhDfAk83JDBE6WbNZgdKeDbJ1uzqk6WxYPX2aNvd");
 #[program]
 pub mod solana_nft_anchor {
     use super::*;
@@ -104,13 +104,13 @@ pub struct InitNFT<'info> {
     /// CHECK - address
     #[account(
         mut,
-        address = MetadataAccount::find_pda(&mint.key()).0,
+        address = MplPDA::find_metadata_account(&mint.key()).0,
     )]
     pub metadata_account: AccountInfo<'info>,
     /// CHECK: address
     #[account(
         mut,
-        address = MasterEdition::find_pda(&mint.key()).0,
+        address = MplPDA::find_master_edition_account(&mint.key()).0,
     )]
     pub master_edition_account: AccountInfo<'info>,
 
